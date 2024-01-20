@@ -180,8 +180,8 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
 
             <div className="flex flex-wrap justify-center mt-10">
                 {
-                    filteredNFTs?.map((nft) => (
-                        NFTCard({ nft })
+                    filteredNFTs?.map((nft, index) => (
+                        <NFTCard key={index} nft={nft} />
                     ))
                 }
             </div>
