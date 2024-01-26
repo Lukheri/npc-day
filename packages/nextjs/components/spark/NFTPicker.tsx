@@ -32,6 +32,13 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
   const [response, setResponse] = useState<string>("");
   const [selectedNFT, setSelectedNFT] = useState<any>();
 
+  const isBrowser = () => typeof window !== "undefined";
+
+  const scrollToTop = () => {
+    if (!isBrowser()) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (!address || loading || nfts === null) {
     return (
       <div className="animate-pulse flex justify-center space-x-4">
@@ -58,6 +65,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
       <div
         className={`border-2 border-gray-400 rounded-md px-2 flex flex-col items-center w-fit cursor-pointer`}
         onClick={() => {
+          scrollToTop();
           setSelectedNFT(nft);
           console.log("clicked", nft);
         }}
