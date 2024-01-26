@@ -38,14 +38,16 @@ const Home: NextPage = () => {
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow">
-        <div className="px-5 py-5">
+        <div className="px-5 py-5 w-full">
           {address ? (
             <NFTPicker address={address}></NFTPicker>
           ) : guestAccount ? (
             <NFTPicker address={guestAccount}></NFTPicker>
           ) : (
             <>
-              <div>Connect Wallet to select one of your NFTs, or press the button below to use a guest wallet.</div>
+              <div className="text-center">
+                Connect Wallet to select one of your NFTs, or press the button below to use a guest wallet.
+              </div>
               <div className="flex items-center flex-col flex-grow">
                 <button className="btn btn-primary btn-sm mt-5" onClick={connectWithGuestAccount} type="button">
                   USE GUEST WALLET
