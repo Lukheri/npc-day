@@ -55,7 +55,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
   const NFTCard = ({ nft }: { nft: any }) => {
     return (
       <div
-        className={`border-2 border-gray-400 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer`}
+        className={`border-2 border-gray-400 rounded-md px-2 flex flex-col items-center w-fit cursor-pointer`}
         onClick={() => {
           setSelectedNFT(nft);
           console.log("clicked", nft);
@@ -126,6 +126,8 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
       req.end();
     });
 
+    console.log(response);
+
     const responseMessage = (response as any).choices[0].message.content;
     console.log(responseMessage);
     setResponse(responseMessage);
@@ -172,37 +174,51 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
       </div>
 
       <div className="text-center">NFTs found: {filteredNFTs?.length}</div>
-      {
-        // show dialog with selected NFT
-        selectedNFT && (
-          <>
-            <div>Selected NFT: {selectedNFT?.collection.name + ": " + selectedNFT?.name}</div>
 
-            <NFTCard nft={selectedNFT} />
+      <div className="flex w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10">
+        {
+          // show dialog with selected NFT
+          selectedNFT && (
+            <div className="flex gap-4 w-full">
+              <div className="w-80">
+                <div>Selected NFT: {selectedNFT?.collection.name + ": " + selectedNFT?.name}</div>
 
-            <input
-              type="text"
-              placeholder="Say something to NFT"
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-              className="border border-gray-400 rounded-md px-2 py-1 mt-2"
-              style={{ width: "100%" }}
-            />
-            <button onClick={sendChatToModel} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md">
-              Send
-            </button>
-            {
-              // show response from model
-              response && (
-                <div className="flex-wrap justify-center mt-10">
+                <NFTCard nft={selectedNFT} />
+              </div>
+              <div className="flex flex-col grow justify-end px-4 gap-6">
+                {
+                  // show response from model
+                  response && (
+                    <div className="flex-wrap justify-center">
+                      <div>Model response:</div>
+                      <div className="break-words">{response}</div>
+                    </div>
+                  )
+                }
+                {/* <div className="flex-wrap justify-center shadow-inner">
                   <div>Model response:</div>
-                  <div className="break-words">{response}</div>
+                  <div className="break-words">
+                    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                  </div>
+                </div> */}
+                <div className="flex gap-4 items-center shrink">
+                  <input
+                    type="text"
+                    placeholder="Say something to NFT"
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    className="border border-gray-400 rounded-md px-2 py-1 text-right text-black"
+                    style={{ width: "100%" }}
+                  />
+                  <button onClick={sendChatToModel} className="px-4 py-2 bg-blue-500 text-white rounded-md">
+                    Send
+                  </button>
                 </div>
-              )
-            }
-          </>
-        )
-      }
+              </div>
+            </div>
+          )
+        }
+      </div>
 
       <div className="flex flex-wrap justify-center mt-10">
         {filteredNFTs?.map((nft, index) => (
