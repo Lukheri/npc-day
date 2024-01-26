@@ -136,49 +136,15 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
   return (
     <div className={`${className}`}>
       <div className="w-full flex justify-center">
-        <div className="relative w-1/2">
-          <label htmlFor="Search" className="sr-only">
-            Search
-          </label>
-
-          <input
-            type="text"
-            id="Search"
-            placeholder="Search by name"
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
-          />
-
-          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-            <button type="button" className="text-gray-600 hover:text-gray-700">
-              <span className="sr-only">Search</span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-4 w-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </button>
-          </span>
-        </div>
+        <input type="text" placeholder="Search by name" className="input input-bordered w-1/2 rounded-md" />
       </div>
 
       <div className="text-center">NFTs found: {filteredNFTs?.length}</div>
 
-      <div className="flex w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10">
-        {
-          // show dialog with selected NFT
-          selectedNFT && (
+      {
+        // show dialog with selected NFT
+        selectedNFT && (
+          <div className="flex w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10">
             <div className="flex gap-4 w-full">
               <div className="w-80">
                 <div>Selected NFT: {selectedNFT?.collection.name + ": " + selectedNFT?.name}</div>
@@ -202,13 +168,19 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                   </div>
                 </div> */}
                 <div className="flex gap-4 items-center shrink">
+                  {/* <input
+                    type="text"
+                    placeholder="Say something to NFT"
+                    
+                    className="border border-gray-400 rounded-md px-2 py-1 text-right text-black"
+                    style={{ width: "100%" }}
+                  /> */}
                   <input
                     type="text"
                     placeholder="Say something to NFT"
+                    className="input input-bordered w-full text-right"
                     value={message}
                     onChange={e => setMessage(e.target.value)}
-                    className="border border-gray-400 rounded-md px-2 py-1 text-right text-black"
-                    style={{ width: "100%" }}
                   />
                   <button onClick={sendChatToModel} className="px-4 py-2 bg-blue-500 text-white rounded-md">
                     Send
@@ -216,9 +188,9 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                 </div>
               </div>
             </div>
-          )
-        }
-      </div>
+          </div>
+        )
+      }
 
       <div className="flex flex-wrap justify-center mt-10">
         {filteredNFTs?.map((nft, index) => (
