@@ -1,5 +1,6 @@
 import { useState } from "react";
 import https from "https";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useAccountNFTs } from "~~/hooks/spark";
 import scaffoldConfig from "~~/scaffold.config";
 
@@ -61,7 +62,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
           console.log("clicked", nft);
         }}
       >
-        <div className="text-warning">{nft.name}</div>
+        <div className="text-warning w-80">{nft.name}</div>
         <img src={String(nft.image.pngUrl)} alt={nft.name} className={`w-80 py-2`} />
       </div>
     );
@@ -144,11 +145,10 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
       {
         // show dialog with selected NFT
         selectedNFT && (
-          <div className="flex w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10">
+          <div className="flex flex-col w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10 gap-6">
+            <div>Selected NFT: {selectedNFT?.collection.name + ": " + selectedNFT?.name}</div>
             <div className="flex gap-4 w-full">
               <div className="w-80">
-                <div>Selected NFT: {selectedNFT?.collection.name + ": " + selectedNFT?.name}</div>
-
                 <NFTCard nft={selectedNFT} />
               </div>
               <div className="flex flex-col grow justify-end px-4 gap-6">
@@ -178,12 +178,25 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                   <input
                     type="text"
                     placeholder="Say something to NFT"
-                    className="input input-bordered w-full text-right"
+                    className="input input-bordered input-secondary w-full text-right shadow-inner"
                     value={message}
                     onChange={e => setMessage(e.target.value)}
                   />
-                  <button onClick={sendChatToModel} className="px-4 py-2 bg-blue-500 text-white rounded-md">
-                    Send
+                  <button onClick={sendChatToModel} className="btn">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>

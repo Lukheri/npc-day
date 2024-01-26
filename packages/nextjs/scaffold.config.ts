@@ -15,7 +15,7 @@ const scaffoldConfig = {
   // targetNetwork: chains.hardhat,
    targetNetwork: chains.mainnet,
   
-  openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_KEY || "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",
+  openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_KEY || "",
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
