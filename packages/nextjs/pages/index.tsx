@@ -1,9 +1,10 @@
-import type { NextPage } from "next";
-import { MetaHeader } from "~~/components/MetaHeader";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { useAccount } from "wagmi";
-import { NFTPicker } from "~~/components/spark";
 import React, { useState } from "react";
+import type { NextPage } from "next";
+import { useAccount } from "wagmi";
+import { MetaHeader } from "~~/components/MetaHeader";
+import { NFTPicker } from "~~/components/spark";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+
 // import React, { useState, useEffect } from "react";
 // import { Engine } from "~~/engine";
 // import Link from "next/link";
@@ -27,46 +28,32 @@ const Home: NextPage = () => {
   //     Engine.load("");
   //   }
   //   doLoad();
-  // }, []);  
+  // }, []);
   const connectWithGuestAccount = () => {
-    
     // use a guest account with NFTs
     setGuestAccount("paulgadi.eth");
-  }
+  };
 
   return (
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow">
-
         <div className="px-5 py-5">
-        {
-          address ? (
+          {address ? (
             <NFTPicker address={address}></NFTPicker>
-
+          ) : guestAccount ? (
+            <NFTPicker address={guestAccount}></NFTPicker>
           ) : (
-            guestAccount ? (
-              <NFTPicker address={guestAccount}></NFTPicker>
-
-            )
-            : (
-              <>
-              <div>
-                Connect Wallet to select one of your NFTs, or press the button below to use a guest wallet.
-              </div>
-              <div className="flex items-center flex-col flex-grow">                
+            <>
+              <div>Connect Wallet to select one of your NFTs, or press the button below to use a guest wallet.</div>
+              <div className="flex items-center flex-col flex-grow">
                 <button className="btn btn-primary btn-sm mt-5" onClick={connectWithGuestAccount} type="button">
                   USE GUEST WALLET
-                </button>                              
+                </button>
               </div>
-              </>
-              
-            )
-          )
-
-        }
+            </>
+          )}
         </div>
-      
       </div>
 
       {/*
