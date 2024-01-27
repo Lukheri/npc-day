@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { OwnedNftsResponse, OwnedNftsValidAt } from 'alchemy-sdk';
 
 /**
@@ -18,7 +18,7 @@ import { OwnedNftsResponse, OwnedNftsValidAt } from 'alchemy-sdk';
 
 type TGlobalState = {
   nativeCurrencyPrice: number;
-  cachedNFTData: any,
+  cachedNFTData: any;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
   setCachedNFTData: (newCachedNFTData: any) => void;
 };
