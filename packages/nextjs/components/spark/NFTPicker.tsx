@@ -65,7 +65,11 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
         }}
       >
         <div className="text-warning w-80">{nft.name}</div>
-        <img src={String(nft.image.pngUrl)} alt={nft.name} className={`w-80 py-2`} />
+        {!!nft.image.pngUrl ? (
+          <img src={String(nft.image.pngUrl)} alt={nft.name} className={`w-80 py-2 my-auto`} />
+        ) : (
+          <div className="skeleton w-80 h-80 py-2 bg-slate-300 my-auto"></div>
+        )}
       </div>
     );
   };
