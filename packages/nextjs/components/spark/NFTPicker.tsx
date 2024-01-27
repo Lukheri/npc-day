@@ -76,7 +76,8 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
     );
   };
 
-  const sendChatToModel = async () => {
+  const sendChatToModel = async (event: any) => {
+    event.preventDefault();
     const initialPrompt =
       "Roleplay as an actual character. I will start with sending you a JSON object containing some information about you. Never talk about NFTs or the blockchain. JSON follows: \n" +
       JSON.stringify(selectedNFT, null, 2);
@@ -145,7 +146,13 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
   return (
     <div className={`${className}`}>
       <div className="w-full flex justify-center">
-        <input type="text" placeholder="Search by name" className="input input-bordered w-1/2 rounded-md" />
+        <input
+          type="text"
+          placeholder="Search by name"
+          className="input input-bordered w-1/2 rounded-md"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
       </div>
 
       <div className="text-center">NFTs found: {filteredNFTs?.length}</div>
@@ -175,14 +182,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                     Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
                   </div>
                 </div> */}
-                <div className="flex gap-4 items-center shrink">
-                  {/* <input
-                    type="text"
-                    placeholder="Say something to NFT"
-                    
-                    className="border border-gray-400 rounded-md px-2 py-1 text-right text-black"
-                    style={{ width: "100%" }}
-                  /> */}
+                <form onSubmit={sendChatToModel} className="flex gap-4 items-center shrink">
                   <input
                     type="text"
                     placeholder="Say something to NFT"
@@ -190,7 +190,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                     value={message}
                     onChange={e => setMessage(e.target.value)}
                   />
-                  <button onClick={sendChatToModel} className="btn">
+                  <button className="btn">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -206,7 +206,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                       />
                     </svg>
                   </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>
