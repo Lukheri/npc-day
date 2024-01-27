@@ -1109,7 +1109,7 @@ const contracts = {
           ],
         },
         ERC6551Registry: {
-          address: "0xc24f77262eCFec289fc4274Dc768033cc3Ec51B5",
+          address: "0x79cC8baCBd050c2Da7511EE4Bcd2A5DABdaB4Ed7",
           abi: [
             {
               inputs: [],

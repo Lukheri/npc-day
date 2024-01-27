@@ -1,6 +1,6 @@
 import { useState } from "react";
+import NFTPickerSkeleton from "./NFTPickerSkeleton";
 import https from "https";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useAccountNFTs } from "~~/hooks/spark";
 import scaffoldConfig from "~~/scaffold.config";
 
@@ -39,15 +39,9 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Skeleton loading
   if (!address || loading || nfts === null) {
-    return (
-      <div className="animate-pulse flex justify-center space-x-4">
-        <div className="rounded-md bg-slate-300 h-6 w-6"></div>
-        <div className="flex items-center space-y-6">
-          <div className="h-2 w-28 bg-slate-300 rounded"></div>
-        </div>
-      </div>
-    );
+    return <NFTPickerSkeleton />;
   }
 
   if (error) {
