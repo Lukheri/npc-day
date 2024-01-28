@@ -61,14 +61,14 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
         onClick={() => {
           scrollToTop();
           setSelectedNFT(nft);
-          console.log("clicked", nft);
+          console.log("clicked", nft, typeof nft);
         }}
       >
         <div className="text-warning w-80">{nft.name}</div>
         {!!nft.image.pngUrl ? (
           <img src={String(nft.image.pngUrl)} alt={nft.name} className={`w-80 py-2 my-auto`} />
         ) : (
-          <div className="skeleton w-80 h-80 py-2 bg-slate-300 my-auto"></div>
+          <div className="animate-pulse w-80 h-80 py-2 bg-slate-300 my-auto"></div>
         )}
       </div>
     );
