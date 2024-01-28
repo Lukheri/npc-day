@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import NFTPickerSkeleton from "./NFTPickerSkeleton";
+import { OwnedNftsResponse } from "alchemy-sdk";
 import https from "https";
 import { useAccountNFTs } from "~~/hooks/spark";
 import scaffoldConfig from "~~/scaffold.config";
@@ -29,6 +30,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
   } = useAccountNFTs(address);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState<string>("");
+  const [prevMessage, setPrevMessage] = useState<string>("");
   const [response, setResponse] = useState<string>("");
   const [selectedNFT, setSelectedNFT] = useState<any>();
 
@@ -74,7 +76,7 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
     );
   };
 
-  const sendChatToModel = async (event: any) => {
+  const sendChatToModel = async (event: FormEvent) => {
     event.preventDefault();
     const initialPrompt =
       "Roleplay as an actual character. I will start with sending you a JSON object containing some information about you. Never talk about NFTs or the blockchain. JSON follows: \n" +
@@ -134,7 +136,8 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
       req.end();
     });
 
-    console.log(response);
+    setPrevMessage(message);
+    setMessage("");
 
     const responseMessage = (response as any).choices[0].message.content;
     console.log(responseMessage);
@@ -157,15 +160,27 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
 
       {
         // show dialog with selected NFT
-        selectedNFT && (
-          <div className="flex flex-col w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10 gap-6">
+        !!selectedNFT && (
+          <div className="flex flex-col w-full p-6 rounded-lg shadow-xl bg-base-100 mt-10 gap-6 relative">
+            <div className="absolute top-2 right-2 cursor-pointer" onClick={() => setSelectedNFT("")}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </div>
             <div>Selected NFT: {selectedNFT?.collection.name + ": " + selectedNFT?.name}</div>
             <div className="flex gap-4 w-full">
               <div className="w-80">
                 <NFTCard nft={selectedNFT} />
               </div>
               <div className="flex flex-col grow justify-end px-4 gap-6">
-                {
+                {/* {
                   // show response from model
                   response && (
                     <div className="flex-wrap justify-center">
@@ -173,13 +188,24 @@ export const NFTPicker = ({ address, className = "" }: TNFTPickerProps) => {
                       <div className="break-words">{response}</div>
                     </div>
                   )
-                }
+                } */}
                 {/* <div className="flex-wrap justify-center shadow-inner">
                   <div>Model response:</div>
                   <div className="break-words">
                     Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
                   </div>
                 </div> */}
+                {!!prevMessage && (
+                  <div className="chat chat-end">
+                    <div className="chat-bubble">{prevMessage}</div>
+                  </div>
+                )}
+                {!!response && (
+                  <div className="chat chat-start">
+                    <div className="chat-header">Model response:</div>
+                    <div className="chat-bubble break-words">{response}</div>
+                  </div>
+                )}
                 <form onSubmit={sendChatToModel} className="flex gap-4 items-center shrink">
                   <input
                     type="text"
